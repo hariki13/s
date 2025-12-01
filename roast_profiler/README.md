@@ -70,3 +70,32 @@ Example Roast CSV Columns (required)
 - `beans` (bean temperature in °C)
 - `air` (air temperature in °C)
 - `ror` or `ror_f` or `computed_air_ror` (rate of rise)
+
+### data_processing.py
+
+Advanced cleaning and preparation pipeline.
+
+Features:
+- Fills missing seconds (interpolation) and flags filled rows (`__filled`).
+- Detects temperature outliers via rolling MAD (configurable threshold) and treats them (interpolate or clip).
+- Multiple smoothing methods: rolling mean or Savitzky–Golay.
+- Recomputes RoR automatically if absent.
+- Generates side-by-side plots (raw vs cleaned vs smoothed, outlier markers, RoR).
+
+**Usage:**
+```bash
+python roast_profiler/data_processing.py path/to/roast.csv \
+  --method savgol --window 15 --poly 3 --zthresh 3.5 --outlier-treatment interpolate
+```
+
+**In code:**
+```python
+from roast_profiler.data_processing import process_roast
+df_clean, report, beans_mask, air_mask = process_roast('roast.csv')
+print(report)
+```
+
+Outputs saved to `processed_out/` (unless overridden):
+- `roast_cleaned.csv` — cleaned + smoothed columns (`beans_clean`, `beans_smooth`, etc.)
+- `processing_report.txt` — summary of operations
+- `cleaning_temperature.png`, `ror.png` — visualization artifacts

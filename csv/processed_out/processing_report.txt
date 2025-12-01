@@ -1,0 +1,7 @@
+rows_original: 679
+rows_filled: 679
+seconds_missing_filled: 0
+outlier_count_beans: 1
+outlier_count_air: 0
+smoothing_method: savgol
+ror_recomputed: False
