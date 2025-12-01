@@ -1,0 +1,166 @@
+import matplotlib.pyplot as plt
+import seaborn as sns   
+
+# matplotlib code snippet
+
+plt.bar(x=['A', 'B', 'C'], height=[5, 7, 3]), plt.bar(categories, values, color='red')  # Create a bar chart
+plt.hist(data, bins=20, color='blue', alpha=0.5)  # Create a histogram #bins is number of bars #alpha is for transparency
+plt.style.use('seaborn-darkgrid')  # Set the style for plots
+plt.title('Matplotlib and Seaborn Cheat Sheet')  # Set the title for the plot
+plt.xlabel('X-axis Label')  # Set the x-axis label
+plt.ylabel('Y-axis Label')  # Set the y-axis label
+plt.legend(['Sample Data'])  # Add a legend to the plot
+plt.grid(True)  # Enable grid
+plt.savefig('cheat_sheet.png')  # Save the plot as a PNG file
+plt.legend(['Sample Data'])  # Add a legend to the plot
+plt.plot(*args, **kwargs)  # Plot data with optional arguments
+plt.subplot(*args, **kwargs) # create other plot(chart)
+plt.scatter(x, y, *args, **kwargs)  # Create a scatter(dot model) plot
+plt.bar(x, height, *args, **kwargs)  # Create a bar chart
+plt.hist(data, bins=10, *args, **kwargs)  # Create a histogram
+plt.tight_layout() #
+plt.boxplot(data, *args, **kwargs)  # Create a box plot
+plt.pie(sizes, labels=labels, *args, **kwargs)  # Create a pie chart
+plt.figure(figsize=(8, 6))  # Set the figure size
+plt.show()  # Display the plot
+# seaborn code snippets
+sns.set_style('darkgrid')  # Set the style for seaborn plots
+sns.set_palette('pastel')  # Set the color palette for seaborn plots
+sns.set_style('whitegrid')  # Set the style for seaborn plots
+sns.lineplot(x='x', y='y', data=df, *args, **kwargs)  # Create a line plot with seaborn
+sns.scatterplot(x='x', y='y', data=df, *args, **kwargs)  # Create a scatter plot with seaborn
+sns.barplot(x='x', y='y', data=df, *args, **kwargs)  # Create a bar plot with seaborn
+sns.heatmap(data, annot=True, *args, **kwargs)  # Create a heatmap with seaborn
+sns.countplot(x='x', data=df, *args, **kwargs)  # Create a count plot with seaborn
+sns.boxplot(x='x', y='y', data=df, *args, **kwargs)  # Create a box plot with to know variance and contribution variable
+sns.violinplot(x='x', y='y', data=df, *args, **kwargs)  # Create a violin plot with
+sns.regplot(x='x', y='y', data=df, *args, **kwargs)  # Create a regression plot with
+sns.pairplot(df, *args, **kwargs)  # Create a pair plot with seaborn
+sns.jointplot(x='x', y='y', data=df, *args, **kwargs)  # Create a joint plot with
+sns.histplot(data, kde=True, *args, **kwargs)  # Create a histogram with seaborn
+sns.displot(data, kde=True, *args, **kwargs)  # Create a distribution plot with 
+sns.load_dataset("iris")
+
+# sample dataset seaborn:
+"iris"=Famous iris flower dataset (species classification), (hue:"species").
+"tips"=Restaurant tips dataset (bill, tip, gender, day, etc.), (hue:"day","time").
+"flights"=Airline passenger numbers by month and year.
+"exercise"=Physical exercise dataset (kind, time, pulse).
+"dots"=Experimental dots dataset (coherence, choice, reaction time).
+
+#*args is Variable number of positional arguments
+def cafe_order(*args):
+    print("You ordered:", args)
+
+cafe_order("Espresso", "Latte", "Cappuccino")
+# Output: You ordered: ('Espresso', 'Latte', 'Cappuccino')
+
+#*kwargs is Variable number of keyword arguments
+def cafe_order(**kwargs):
+    print("You ordered:")
+    for item, quantity in kwargs.items():
+        print(f"{quantity} {item}")
+
+def coffee_details(**kwargs):
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
+coffee_details(size="Large", milk="Oat", sugar="No")
+# Output:
+# size: Large
+# milk: Oat
+# sugar: No
+
+
+
+plt.show()  # Display the plot
+
+# color reference in matplotlib and seaborn
+
+alpha/RGB/RGBA TUPLES(Tranfarancy/Red/Green/Blue 
+number : (0.1, 0.2, 0.5) or (0.1, 0.2, 0.5, 0.8) (last value = transparency).)
+
+# Tab colors (modern defaults):
+"tab:blue", "tab:orange", "tab:green", 
+"tab:red", "tab:purple", "tab:brown", 
+"tab:pink", "tab:gray", "tab:olive", "tab:cyan"
+# Colormaps: 
+Continuous gradients like "viridis", "plasma", 
+"inferno", "cividis". These are great for heatmaps
+# Basic single-letter codes:
+b = blue
+g = green
+r = red
+c = cyan
+m = magenta
+y = yellow
+k = black
+w = white
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Matplotlib example
+plt.plot([1,2,3], [4,5,6], color="tab:orange", label="Gas Power(sample)")
+plt.plot([1,2,3], [2,3,4], color="#33FF57", label="Air Flow(sample)")
+plt.legend()
+plt.show()
+
+# Seaborn example
+sns.set_palette("Set2")
+sns.lineplot(x=[1,2,3], y=[4,5,6], label="Temperature")
+sns.lineplot(x=[1,2,3], y=[2,3,4], label="Speed")
+plt.show()
+
+# Source - https://stackoverflow.com/a
+# Posted by joelostblom, modified by community. See post 'Timeline' for change history
+# Retrieved 2025-11-29, License - CC BY-SA 4.0
+
+import matplotlib.pyplot as plt
+from matplotlib import colors as mcolors
+
+
+colors = dict(mcolors.BASE_COLORS, **mcolors.CSS4_COLORS)
+
+# Sort colors by hue, saturation, value and name.
+by_hsv = sorted((tuple(mcolors.rgb_to_hsv(mcolors.to_rgba(color)[:3])), name)
+                for name, color in colors.items())
+sorted_names = [name for hsv, name in by_hsv]
+
+n = len(sorted_names)
+ncols = 4
+nrows = n // ncols
+
+fig, ax = plt.subplots(figsize=(12, 10))
+
+# Get height and width
+X, Y = fig.get_dpi() * fig.get_size_inches()
+h = Y / (nrows + 1)
+w = X / ncols
+
+for i, name in enumerate(sorted_names):
+    row = i % nrows
+    col = i // nrows
+    y = Y - (row * h) - h
+
+    xi_line = w * (col + 0.05)
+    xf_line = w * (col + 0.25)
+    xi_text = w * (col + 0.3)
+
+    ax.text(xi_text, y, name, fontsize=(h * 0.8),
+            horizontalalignment='left',
+            verticalalignment='center')
+
+    ax.hlines(y + h * 0.1, xi_line, xf_line,
+              color=colors[name], linewidth=(h * 0.8))
+
+ax.set_xlim(0, X)
+ax.set_ylim(0, Y)
+ax.set_axis_off()
+
+fig.subplots_adjust(left=0, right=1,
+                    top=1, bottom=0,
+                    hspace=0, wspace=0)
+plt.show()
+
+

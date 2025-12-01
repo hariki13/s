@@ -1,0 +1,299 @@
+import numpy as np
+note: first array is row, second is column, so (3,2) is 3 rows, 2 columns.
+note: first element is inclusive, second is exclusive, will be accessed by using zero Value.
+note: array is without commas between elements.
+note= row vector: shape (1,n). indexing start from 0, column vector: shape (n,1) indexing start from 1.
+note = axis=0 is column-wise operation, axis=1 is row-wise operation.
+note: 2D array indexing: arr[row, column], 3D array indexing: arr[depth, row, column], etc.
+
+# Create arrays
+arr = np.array([1,2,3])
+np.arange(0,10,2)   # step
+np.linspace(0,1,5)  # evenly spaced
+
+# numpy array arangements (starting, ending, step)
+np.arange(0, 10, 2)  # from 0 to 10 with step of 2
+np.arange(5)         # from 0 to 5 with step of 1
+# Special arrays
+np.zeros((3,2))    # 3x2 zeros
+np.ones((2,4))     # 2x4 ones
+
+# add new axis
+arr[:, np.newaxis]  # convert to column vector
+# Indexing and slicing
+arr[0]              # first element
+arr[1:3]           # slice
+arr[-1]             # last element
+arr[[0,2]]         # fancy indexing
+# Reshaping
+arr.reshape(3,1) # convert to column vector
+arr.flatten()       # flatten to 1D
+# expand dimensions
+np.expand_dims(arr, axis=0)  # add new axis at front
+np.expand_dims(arr, axis=1)  # add new axis at end
+# Shape
+arr.reshape(2,3)
+arr.T               # transpose
+
+# Math
+np.mean(arr)          # mean
+np.sum(arr)          # sum
+np.std(arr)         # standard deviation
+# formula for standard deviation
+# std = sqrt(mean((x - mean(x))**2))/N= number of elements.
+
+# why standard deviation is used: to measure the amount of variation or dispersion of a set of values.
+# and Data science → Measures variability in datasets.
+# Machine learning → Normalization often uses mean and std.
+# Business analytics → Helps understand consistency (e.g., daily café sales variation).
+
+# statistics
+np.max(arr)         # max
+np.min(arr)         # min
+np.var(arr)         # variance
+np.min(arr)         # min
+np.log(arr)         # natural log
+np.exp(arr)         # exponential
+np.sqrt(arr)        # square root
+np.sin(arr)         # sine
+np.cos(arr)         # cosine
+np.tan(arr)         # tangent
+
+# Statistics
+np.median(arr)      # median
+np.percentile(arr, 90)  # 90th percentile   
+np.unique(arr)      # unique elements
+np.sort(arr)        # sort
+np.argsort(arr)     # indices that would sort the array
+np.argmax(arr)      # index of max
+np.argmin(arr)      # index of min
+
+# Linear algebra use for PCA(principal component analysis), comparison betwen 2 variable. matrix operations, transformations, solving systems, data cleaning,regression,correlation.
+np.dot(arr1, arr2)  # dot product
+np.cross(arr1, arr2)  # cross product
+np.linalg.inv(mat)  # inverse not recommended for solving linear systems.
+np.linalg.det(mat)  # determinant
+np.linalg.eig(mat)  # eigenvalues and eigenvectors
+np.linalg.svd(mat)  # singular value decomposition
+np.linalg.norm(arr)  # norm
+np.linalg.matrix_rank(mat)  # rank
+np.linalg.cholesky(mat)  # Cholesky decomposition
+np.linalg.solve(A, b)  # solve linear equations Ax = b #always prefer this for solving linear systems
+np.linalg.lstsq(A, b)  # least squares solution best fit solution (works for regression, overdetermined systems).
+# In café analytics, this lets you quantify the impact of marketing spend on sales.
+
+np.vstack((arr1, arr2))  # vertical stack
+np.hstack((arr1, arr2))  # horizontal stack
+np.concatenate((arr1, arr2), axis=0)  # concatenate along axis
+np.split(arr, 3)  # split into 3 arrays
+
+# Random
+np.random.rand(3,2) # 3x2 array with random floats between 0 and 1
+# np.random.randint(0,10,5) # 1D array with 5 random integers between 0 and 9
+np.random.randint(0,10,(3,2)) # 3x2 array with random integers between 0 and 9
+np.random.seed(42)  # set seed for reproducibility
+np.random.shuffle(arr)  # shuffle array
+np.random.choice(arr, size=3, replace=False)  # random sample without replacement
+
+arr + 2             # add scalar
+arr * 3             # multiply scalar
+arr1 + arr2        # element-wise add
+arr1 * arr2        # element-wise multiply
+arr.dot(arr2)      # computes dot product for 2D arrays
+arr > 2            # boolean mask
+df["col"].mean(numeric_only=True)  # mean
+df["col"].sum(numeric_only=True)   # sum
+df["col"].max(numeric_only=True)   # max
+df["col"].min(numeric_only=True)   # min
+df["col"].median(numeric_only=True)  # median
+df["col"].std(numeric_only=True)   # std
+df["col"].var(numeric_only=True)   # variance
+df["col"].count()                 # count non-null
+df["col"].corr(df["col2"])        # correlation
+df["col"].cov(df["col2"])         # covariance
+# Filtering
+df[df["col"] > 5]          # filter rows
+df[df["col"].isin([1,2,3])]  # filter rows in list  
+df[df["col"].str.contains("pattern")]  # filter string pattern
+df[df["col"].isna()]       # filter missing values
+df[df["col"].between(10,20)]  # filter between values
+# Sorting
+df.sort_values(by="col", ascending=True)  # sort by column
+df.sort_values(by=["col1", "col2"], ascending=[True, False])  # sort by multiple columns
+# Grouping
+df.groupby("col")["col2"].mean()  # group by col and mean of
+df.groupby(["col1", "col2"])["col3"].sum()  # group by multiple cols and sum of
+# Aggregations
+df.agg({"col1": "mean", "col2": "sum"})  # multiple aggregations
+# Summary statistics
+df.describe()  # summary statistics
+# Summary statistics for numeric columns only
+df.describe(include=[np.number])  # summary statistics for numeric columns only
+# Summary statistics for categorical columns only
+df.describe(include=[object])  # summary statistics for categorical columns only
+# Summary statistics for all columns
+df.describe(include="all")  # summary statistics for all columns
+# Summary statistics for specific columns
+df[["col1", "col2"]].describe()  # summary statistics for specific
+
+# handling missing values
+df.isna().sum()       # count missing values per column
+df.dropna()           # drop rows with missing values
+df.fillna(0)          # fill missing values with 0
+df.fillna(df.mean())  # fill missing values with mean
+df.fillna(method="ffill")  # forward fill missing values
+df.fillna(method="bfill")  # backward fill missing values
+
+# Statistics ignoring NaNs
+np.mean(arr[~np.isnan(arr)])  # mean ignoring NaNs
+np.nanmean(arr)  # mean ignoring NaNs
+np.nansum(arr)   # sum ignoring NaNs
+np.nanstd(arr)  # std ignoring NaNs
+np.nanvar(arr)  # variance ignoring NaNs
+np.nanmedian(arr)  # median ignoring NaNs
+np.nanmax(arr)  # max ignoring NaNs
+np.nanmin(arr)  # min ignoring NaNs
+
+
+# Overall statistics
+df.mean(numeric_only=True)  # mean of each column
+df.sum(numeric_only=True)  # sum of each column
+df.max(numeric_only=True)  # max of each column
+df.min(numeric_only=True)  # min of each column
+df.median(numeric_only=True)  # median of each column
+df.std(numeric_only=True)  # std(standard deviation) of each column
+df.var(numeric_only=True)  # variance of each column
+df.count()        # count of non-null values
+df.corr()          # correlation matrix
+df.cov()           # covariance matrix
+
+# Column-wise statistics
+df["col"].mean(numeric_only=True)  # mean of specific column
+df["col"].sum(numeric_only=True)  # sum of specific column
+df["col"].max(numeric_only=True)  # max of specific column
+df["col"].min(numeric_only=True)  # min of specific column
+df["col"].median(numeric_only=True)  # median of specific column
+df["col"].std(numeric_only=True)  # std of specific column
+df["col"].var(numeric_only=True)  # variance of specific column
+df["col"].count()        # count of non-null values in specific column
+df["col"].corr(df["col2"])  # correlation between two columns
+df["col"].cov(df["col2"])   # covariance between two columns
+# Row-wise statistics
+df.mean(axis=1, numeric_only=True)  # mean of each row
+df.sum(axis=1, numeric_only=True)   # sum of each row
+df.max(axis=1, numeric_only=True)   # max of each row
+df.min(axis=1, numeric_only=True)   # min of each row
+df.median(axis=1, numeric_only=True)  # median of each row
+df.std(axis=1, numeric_only=True)   # std of each row
+df.var(axis=1, numeric_only=True)   # variance of each row
+df.count(axis=1)        # count of non-null values in each row
+df.corr(axis=1)          # correlation matrix for each row
+df.cov(axis=1)           # covariance matrix for each
+# DataFrame-wise statistics
+df.mean().mean(numeric_only=True)  # overall mean
+df.sum().sum(numeric_only=True)    # overall sum
+df.max().max(numeric_only=True)    # overall max
+df.min().min(numeric_only=True)    # overall min    
+df.median().median(numeric_only=True)  # overall median
+df.std().std(numeric_only=True)    # overall std
+df.var().var(numeric_only=True)    # overall variance
+df.count().sum()        # overall count of non-null values
+df.corr().mean().mean(numeric_only=True)  # overall correlation
+df.cov().mean().mean(numeric_only=True)   # overall covariance
+# Summary statistics with specific percentiles
+df.describe(percentiles=[0.1, 0.25, 0.5, 0.75, 0.9])  # summary statistics with specific percentiles
+# Selection based on statistics
+df[df["col"] > df["col"].mean(numeric_only=True)]  # filter rows where col > mean
+df[df["col"] < df["col"].median(numeric_only=True)]  # filter
+
+# Single column operations
+df["col"].value_counts()  # count unique values
+df["col"].unique()        # unique values
+df["col"].nunique()       # number of unique values
+df["col"].isna()          # check for missing values
+df["col"].notna()         # check for non-missing values
+df["col"].fillna(0)      # fill missing values
+df["col"].str.lower()    # string to lowercase
+df["col"].str.upper()    # string to uppercase
+df["col"].str.contains("pattern")  # string contains pattern
+df["col"].str.replace("old", "new")  # string replace
+df["col"].dt.year         # extract year from datetime
+df["col"].dt.month        # extract month from datetime
+df["col"].dt.day          # extract day from datetime
+df["col"].dt.hour         # extract hour from datetime
+df["col"].dt.minute       # extract minute from datetime
+df["col"].dt.second       # extract second from datetime
+df["col"].dt.dayofweek    # extract day of week from datetime
+df["col"].dt.day_name()   # extract day name from datetime
+df["col"].dt.week         # extract week from datetime
+df["col"].dt.month_name() # extract month name from datetime
+df["col"].dt.quarter      # extract quarter from datetime
+df["col"].between(10, 20)  # filter between values
+# Drop irrelevant columns
+df = df.drop(columns=["unnecessary_col1", "unnecessary_col2"])
+# Handle missing values
+df = df.fillna({"col1": df["col1"].mean(), "col2": "Unknown"}) # optional: fill missing values with mean or specific value
+df = df.dropna(subset=["important_col"]) # optional: drop rows with missing important_col
+df = df.fillna(method="ffill")  # optional: forward fill missing values
+# Single column operations
+df['col'].value_counts()  # frequency counts
+df['col'].unique()        # unique values
+df['col'].nunique()       # number of unique values
+df['col'].isna()          # check for missing values
+df['col'].fillna(df['col'].mean())  # fill missing with mean
+df['col'].str.lower()    # string to lowercase
+df['col'].str.upper()    # string to uppercase
+df['col'].str.contains("pattern")  # string contains pattern
+df['col'].str.replace("old", "new")  # string replace
+df['col'].dt.year         # extract year from datetime
+df['col'].dt.month        # extract month from datetime
+df['col'].dt.day          # extract day from datetime
+df['col'].dt.hour         # extract hour from datetime
+df['col'].dt.minute       # extract minute from datetime
+df['col'].dt.second       # extract second from datetime
+df['col'].dt.dayofweek    # extract day of week from datetime
+df['col'].dt.day_name()   # extract day name from datetime
+df['col'].dt.week         # extract week from datetime
+df['col'].dt.month_name() # extract month name from datetime
+df['col'].dt.quarter      # extract quarter from datetime
+df["col"].between(10, 20)  # filter between values
+
+# performance optimizations
+df["col"] = df["col"].astype("category")  # convert to categorical type
+df["col"] = pd.to_datetime(df["col"])     # convert to datetime type
+df["col"] = pd.to_numeric(df["col"], errors="coerce")  # convert to numeric type    
+df = df.sample(frac=0.1, random_state=42)  # work with 10% sample for faster processing
+df = df.reset_index(drop=True)  # reset index after sampling
+
+# vectorized operations
+df["new_col"] = df["col1"] + df["col2"]  # vectorized addition
+df["new_col"] = df["col1"] * 2           # vectorized multiplication
+df["new_col"] = df["col1"] ** 2          # vectorized exponentiation
+df["new_col"] = df["col1"] / df["col2"]  # vectorized division
+df["new_col"] = np.log(df["col1"])        # vectorized log
+df["new_col"] = np.exp(df["col1"])        # vectorized exponential
+df["new_col"] = np.sqrt(df["col1"])       # vectorized square root
+df["new_col"] = np.sin(df["col1"])        # vectorized sine
+df["new_col"] = np.cos(df["col1"])        # vectorized cosine
+df["new_col"] = np.tan(df["col1"])        # vectorized tangent
+df["new_col"] = np.abs(df["col1"])        # vectorized absolute value
+
+# python loops (avoid for performance)
+for index, row in df.iterrows():
+    df.at[index, "new_col"] = row["col1"] + row["col2"]  # row-wise addition (inefficient)  
+# prefer vectorized operations instead
+# Example: Dot Product
+arr1 = np.array([1, 2, 3])  # numeric array
+arr2 = np.array([4, 5, 6])  # numeric array
+result = np.dot(arr1, arr2)  # computes the dot product of two arrays   
+print(result)
+# The dot product is calculated as follows:
+# (1 * 4) + (2 * 5) + (3 * 6) = 4 + 10 + 18 = 32
+#  use the %timeit magic command in Jupyter Notebook to compare performance
+# Example: Solving Linear Equations
+a = np.array([[2, 1], [1, 3]])
+b = np.array([[8], [13]])
+result = np.linalg.solve(a, b)
+print(result)
+# This solves the equations:
+# 2x + 1y = 8

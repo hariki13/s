@@ -1,0 +1,276 @@
+# kaggle taking data set
+!kaggle datasets list -s coffee
+
+# kaggle data set download
+!kaggle datasets download -d(directory for save file) /-name the data set download
+
+# extract zip file
+import zipfile
+import os
+
+zip_path = "./global-coffee-health-dataset.zip"
+extract_path = "./data"
+
+with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+    zip_ref.extractall(extract_path)
+
+ # PANDAS CHEAT SHEET
+ # https://pandas.pydata.org/Pandas_Cheat_Sheet.pdf
+ # Pandas Documentation
+ # https://pandas.pydata.org/docs/
+ # Pandas GitHub
+
+
+ import pandas as pd
+
+# Load data
+df = pd.read_csv("file.csv")
+
+# dataframe creation
+data = {"col1": [1, 2, 3], "col2": ["A", "B", "C"]
+}
+df = pd.DataFrame(data) # put this function to create dataframe always.
+# Select columns
+selected_columns = df[["col1", "col2"]]
+
+# Inspect
+df.head()        # first 5 rows
+df.info()        # structure
+df.describe()    # stats summary
+
+# Select
+df.loc[0, "col"]   # by label
+df.iloc[0, 1]      # by position
+df[df["col"] > 10] # filter
+
+# Clean
+df.dropna()        # remove missing
+df.fillna(0)       # replace missing
+df["col"].fillna(df["col"].mean(), inplace=True)  # fill missing with mean
+df.drop(columns=["unnecessary_col"], inplace=True)  # drop column
+df.rename(columns={"old_name": "new_name"}, inplace=True)  # rename column
+df["col"] = df["col"].astype(float)  # change data type
+df["col"].fillna(df["col"].mean(), inplace=False)  # fill missing with mean
+
+# cleaning data
+df.columns = df.columns.str.strip().str.lower().str.replace(" ", "_")  # clean column names
+df["col"] = df["col"].str.strip().str.lower()  # clean string columns
+df["date_col"] = pd.to_datetime(df["date_col"], errors="coerce")  # parse dates
+df = df.drop_duplicates()  # remove duplicates
+df = df[(df["numeric_col"] >= lower_bound) & (df["numeric_col"] <= upper_bound)]  # remove outliers
+
+# data transformation
+df["new_col"] = df["col1"] + df["col2"]  # create new column
+df["new_col"] = df["col"].apply(lambda x: x * 2)  # apply function to column
+df["col"] = df["col"].str.lower()  # string to lowercase
+df["col"] = df["col"].str.upper()  # string to uppercase
+df["col"] = df["col"].str.contains("pattern")  # string contains pattern
+df["col"] = df["col"].str.replace("old", "new")  # string replace
+df["date_col"] = df["date_col"].dt.year  # extract year from datetime
+df["date_col"] = df["date_col"].dt.month  # extract month from datetime
+df["date_col"] = df["date_col"].dt.day  # extract day from datetime
+df["date_col"] = df["date_col"].dt.hour  # extract hour from datetime
+df["date_col"] = df["date_col"].dt.minute  # extract minute from datetime
+df["date_col"] = df["date_col"].dt.second  # extract second from datetime
+df["date_col"] = df["date_col"].dt.dayofweek  # extract day of week from datetime
+df["date_col"] = df["date_col"].dt.day_name()  # extract day name from datetime
+df["date_col"] = df["date_col"].dt.week  # extract week from datetime
+df["date_col"] = df["date_col"].dt.month_name()  # extract month name from datetime
+df["date_col"] = df["date_col"].dt.quarter  # extract quarter from datetime
+df = df[df["col"].between(10, 20)]  # filter between values
+df = pd.merge(df1, df2, on="key")  # join dataframes
+df = pd.concat([df1, df2])  # concatenate dataframes
+df = df.sort_values("col")  # sort by column
+df = df.drop_duplicates()  # remove duplicates
+
+# data indexing
+df = df.join(other_df.set_index("key"), on="key")  # join dataframes
+df.join(other_df.set_index, how="left", on="key")  # left join
+df.join(other_df.set_index, how="right", on="key")  # right join
+df.join(other_df.set_index, how="inner", on="key")  # inner join
+df.join(other_df.set_index, how="outer", on="key")  # outer join
+df.join(other_df.set_index, how="cross")  # cross join
+df.set_index("col", inplace=True)  # set index
+df.reset_index(inplace=True)  # reset index
+df.remove_index(inplace=True)  # remove index
+
+# Aggregate
+df.groupby("col")["value"].mean()
+df.sort_values("col")  # sort by column
+df.merge(other_df, on="key")  # join
+df.pivot(index="col1", columns="col2", values="value", Aggfunc="operation")  # pivot table
+df.crosstab(df["col1"], df["col2"])  # cross tabulation(how many times each combination occurs)
+
+# WHOLE DATAFRAME OPERATIONS
+df.isnull()        # check for missing values
+df.duplicated()   # check for duplicates
+df.drop_duplicates()  # remove duplicates
+df.rename(columns={"old_name": "new_name"})  # rename columns
+df.astype({"col": "float"})  # change data type
+df['new_col'] = df['col1'] + df['col2']  # create new column
+df['col'].apply(lambda x: x * 2)  # apply function to column
+df.mean(numeric_only=True) # mean of each column
+df.sum(numeric_only=True)  # mean of each column
+df.max(numeric_only=True)  # mean of each column
+df.min(numeric_only=True)  # mean of each column
+df.median(numeric_only=True)  # mean of each column
+df.std(numeric_only=True)  # mean of each column
+df.var(numeric_only=True)  # mean of each column
+df.count()        # count of non-null values
+df.corr()          # correlation matrix
+df.cov()           # covariance matrix
+df.describe()      # summary statistics
+df.range(numeric_only=True)  # range of each column like start to end
+df.skew(numeric_only=True)   # skewness of each column
+df.kurt(numeric_only=True)   # kurtosis of each column
+df.quantile(0.25)  # 25th percentile
+df.quantile(0.5)   # 50th percentile (median)
+df.quantile(0.75)  # 75th percentile
+df.lambda x: x.max() - x.min()  # range of each column
+df['sum'] = df.sum(axis=1)  # row-wise sum
+df['sum'] = df.apply(lambda x: x.sum(), axis=1)  # row-wise sum using apply.
+# data imputation
+df = df.fillna(df.mean(numeric_only=True))  # fill missing with mean
+df = df.fillna(method="ffill")  # forward fill
+df = df.fillna(method="bfill")  # backward fill
+df = df.interpolate()  # interpolate missing values
+df = df.dropna()  # drop rows with missing values
+df = df.dropna(axis=1)  # drop columns with missing values
+df = df.dropna(how="all")  # drop rows with all missing values
+df = df.dropna(thresh=2)  # drop rows with less than 2 non-missing values
+df = df.dropna(subset=["col1", "col2"])  # drop rows with missing in specific columns
+df = df.fillna({"col1": df["col1"].mean(), "col2": "Unknown"})  # fill specific columns
+df["col"] = df["col"].fillna(df["col"].mean())  # fill specific column with mean
+df["col"] = df["col"].fillna(df["col"].median())  # fill specific column with median
+df["col"] = df["col"].fillna(df["col"].mode()[0])  # fill specific column with mode
+df["col"] = df["col"].fillna(method="ffill")  # forward fill
+df["col"] = df["col"].fillna(method="bfill")  # backward fill
+df["col"] = df["col"].interpolate()  # interpolate missing values
+
+
+# single column operations
+df['col'].value_counts()  # frequency counts
+df['col'].unique()        # unique values
+df['col'].nunique()       # number of unique values
+df['col'].isna()          # check for missing values
+df['col'].fillna(df['col'].mean())  # fill missing with mean
+df['col'].str.lower()    # string to lowercase
+df['col'].str.upper()    # string to uppercase
+df['col'].str.contains("pattern")  # string contains pattern
+df['col'].str.replace("old", "new")  # string replace
+df['col'].dt.year         # extract year from datetime
+df['col'].dt.month        # extract month from datetime
+df['col'].dt.day          # extract day from datetime
+df['col'].dt.hour         # extract hour from datetime
+df['col'].dt.minute       # extract minute from datetime
+df['col'].dt.second       # extract second from datetime
+df['col'].dt.dayofweek    # extract day of week from datetime
+df['col'].dt.day_name()   # extract day name from datetime
+df['col'].dt.week         # extract week from datetime
+df['col'].dt.month_name() # extract month name from datetime
+df['col'].dt.quarter      # extract quarter from datetime
+df["col"].between(10, 20)  # filter between values
+df.set_index(keys="col", inplace=True)  # set index
+df.reset_index(inplace=True)  # reset index
+df.remove_index(inplace=True)  # remove index
+df.resample("M").mean()  # resample to monthly frequency and compute mean
+df.rolling(window=3).mean()  # rolling mean with window size 3
+df.expanding().mean()  # expanding mean
+df.shift(periods=1)  # shift values by 1 period
+df.diff()  # compute difference between consecutive rows
+df.pct_change()  # compute percentage change between consecutive rows
+df.rank()  # compute rank of each value
+df.clip(lower=0, upper=100)  # clip values to a specified range
+df.resample("D").sum()  # resample to daily frequency and compute sum
+df.resample("W").mean()  # resample to weekly frequency and compute mean
+df.resample("M").max()  # resample to monthly frequency and compute max
+df.resample("Q").sum()  # resample to quarterly frequency and compute sum
+df.resample("Y").min()  # resample to yearly frequency and compute min
+
+# Data Cleaning Steps
+
+
+# drop irrelevant columns
+df = df.drop(columns=["unnecessary_col1", "unnecessary_col2"])
+
+# handle missing values
+df = df.fillna({"col1": df["col1"].mean(), "col2": "Unknown"}) # optional: fill missing values with mean or specific value
+df = df.dropna(subset=["important_col"]) # optional: drop rows with missing important_col
+df = df.fillna(method="ffill")  # optional: forward fill missing values
+df = df.fillna({"col3": "Unknown"})  # optional: fill specific column with a value
+df["col3"] = df["col3"].interpolate()   # optional: interpolate missing values
+
+# handle duplicates
+df = df.drop_duplicates()
+# map categorical values
+df["category_col"] = df["category_col"].map({"old_value1": "new_value1", "old_value2": "new_value2"})   # optional: map old categorical values to new ones
+a_square = df["numeric_col"] ** 2  # square of a numeric column
+df["numeric_col_squared"] = a_square  # add squared values as new column
+# calculate IQR for outlier detection # iqr is interquartile range
+Q1 = df["numeric_col"].quantile(0.25)
+Q3 = df["numeric_col"].quantile(0.75)
+IQR = Q3 - Q1
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+
+
+# handle outliers
+df = df[(df["numeric_col"] >= lower_bound) & (df["numeric_col"] <= upper_bound)]
+# fix inconsistent data entries
+df["category_col"] = df["category_col"].str.strip().str.lower()
+
+# fix formatting issues
+df.columns = df.columns.str.strip().str.lower().str.replace(" ", "_")
+
+# statistical summary
+print(df.describe(include="all"))
+
+# correlation matrix
+print(df.corr())
+
+# standard info
+print(df.info())
+
+# shape
+print(df.shape)
+
+# head
+print(df.head())
+
+# tail
+print(df.tail())
+
+# sample
+print(df.sample(5))
+
+# standardize text data
+df["text_col"] = df["text_col"].str.lower().str.strip()
+
+# fix date formats
+df["date_col"] = pd.to_datetime(df["date_col"], errors="coerce")
+df["date_col"] = df["date_col"].dt.strftime("%Y-%m-%d")
+
+# fix data types
+df["numeric_col"] = pd.to_numeric(df["numeric_col"], errors="coerce")
+df["category_col"] = df["category_col"].astype("category")
+
+
+# print
+print(df.to_string())
+
+# convert data types
+df["date_col"] = pd.to_datetime(df["date_col"])
+df["numeric_col"] = df["numeric_col"].astype(float)
+df["category_col"] = df["category_col"].astype("category")
+
+# Save
+df.to_csv("cleaned_data.csv", index=False)
+df.to_excel("cleaned_data.xlsx", index=False)
+df.to_json("cleaned_data.json", orient="records")
+df.to_sql("table_name", con=engine, if_exists="replace", index=False)
+df.to_html("data.html")
+df.to_parquet("data.parquet")
+df.to_pickle("data.pkl")
+df.to_hdf("data.h5", key="df", mode="w")
+df.to_stata("data.dta")
+   
