@@ -99,3 +99,22 @@ Outputs saved to `processed_out/` (unless overridden):
 - `roast_cleaned.csv` — cleaned + smoothed columns (`beans_clean`, `beans_smooth`, etc.)
 - `processing_report.txt` — summary of operations
 - `cleaning_temperature.png`, `ror.png` — visualization artifacts
+
+
+
+
+LEARNING_TASKS.md - 13 progressive tasks across 4 skill levels:
+
+🟢 Beginner: data loading, missing data, type conversions
+🟡 Intermediate: statistics, groupby, visualization
+🟠 Advanced: time series, customer behavior, anomaly detection
+🔴 Expert: forecasting, recommendations, dashboards
+
+
+tasks/ - Starter templates with function stubs and docstrings:
+
+task_1_1_data_exploration.py
+task_1_2_missing_data.py
+task_2_1_statistics.py
+task_3_1_time_series.py
+task_4_1_forecasting.py
