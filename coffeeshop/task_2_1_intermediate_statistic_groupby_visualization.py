@@ -191,13 +191,11 @@ plt.title('Price Distribution by Payment Method')
 
 # Plot 8: Correlation Heatmap
 plt.subplot(3, 3, 8)
-# Create numerical encoding for categorical variables
-df_encoded = df.copy()
-df_encoded['cash_type_encoded'] = df_encoded['cash_type'].astype('category').cat.codes
-df_encoded['coffee_encoded'] = df_encoded['coffee_name'].astype('category').cat.codes
-corr = df_encoded[['money', 'hour', 'cash_type_encoded', 'coffee_encoded']].corr()
-sns.heatmap(corr, annot=True, fmt='.2f', cmap='coolwarm', center=0, square=True)
-plt.title('Correlation Matrix')
+# Use one-hot encoding for categorical variables for correlation analysis
+df_encoded = pd.get_dummies(df, columns=['cash_type', 'coffee_name'], drop_first=True)
+corr = df_encoded[['money', 'hour'] + [col for col in df_encoded.columns if col.startswith('cash_type_') or col.startswith('coffee_name_')]].corr()
+# Exclude coffee_name from correlation analysis to avoid artificial ordinal relationships
+corr = df_encoded[['money', 'hour', 'cash_type_encoded']].corr()
 
 # Plot 9: Top Coffee + Payment Method
 plt.subplot(3, 3, 9)
