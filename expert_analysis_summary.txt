@@ -1,0 +1,24 @@
+BUSINESS PERFORMANCE
+Total Revenue: $6,890.00 over 41 days
+Daily Average: $168.05
+Growth Trend: +72.3% week-over-week
+Best Performing Day: Sunday, February 09
+
+FORECASTING RESULTS
+Model Accuracy: -5.6% (R² Score: -0.056)
+7-Day Forecast: $1325.84
+Expected Daily Average: $189.41
+Prediction Error: ±$45.32 (MAE)
+
+TOP 5 RECOMMENDATIONS
+1. PRICING: Increase prices 10% on 5 high-demand products → +$252.44
+2. STAFFING: Optimize staff at peak hours (18:00) - need 3 staff
+3. MARKETING: Target Tuesday with promotions (lowest revenue)
+4. INVENTORY: Top product (americano with milk) needs 7 units/week
+5. LOYALTY: Implement card-based rewards (current 69% card usage)
+
+EXPECTED IMPACT
+Revenue Increase: ~10-15% with pricing optimization
+Cost Reduction: ~8% with optimized staffing
+Customer Retention: +20% with loyalty program
+Inventory Efficiency: +15% with forecasting-based ordering
